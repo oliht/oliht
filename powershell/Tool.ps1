@@ -10,8 +10,8 @@
     6. Security Logs (letzte 10000) speichern (C:\)
     7. freien Speicherplatz anzeigen
     8. Computer Info anzeigen
-    9. Platzhalter
-    10.Platzhalter
+    9. Netzwerkübersicht anzeigen
+    10.Test-Connection (Ping)
     "
     $Eingabe=read-host -prompt "Bitte eine Zahl eingeben"
 
@@ -49,11 +49,12 @@
         }
 
         elseif ($Eingabe -eq '9') {
-            
+            Get-NetNeighbor -AddressFamily IPv4 -State Reachable 
         }
 
         elseif ($Eingabe -eq '10') {
-            
+            $computerName = Read-Host "Geben Sie den Namen oder die IP-Adresse des Zielhosts ein:"
+            Test-Connection -ComputerName $computerName -Count 5 -Delay 1 -BufferSize 32    
         }
 
     
