@@ -1,0 +1,20 @@
+import subprocess
+import time
+
+# Name des Dienstes, der überwacht werden soll
+service_name = "mein_dienst"
+
+# Anzahl der Sekunden zwischen den Überprüfungen
+check_interval = 60
+
+while True:
+    # Überprüfen Sie den Status des Dienstes
+    status = subprocess.run(["systemctl", "is-active", service_name], capture_output=True, text=True).stdout.strip()
+    
+    # Wenn der Dienst nicht läuft, starten Sie ihn neu
+    if status != "active":
+        print(f"Dienst {service_name} ist nicht aktiv. Starte den Dienst neu...")
+        subprocess.run(["systemctl", "restart", service_name])
+    
+    # Warten Sie für den nächsten Überprüfungszyklus
+    time.sleep(check_interval)
