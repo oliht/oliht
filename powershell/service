@@ -1,0 +1,19 @@
+# Name des Dienstes, der überwacht werden soll
+$service_name = "mein_dienst"
+
+# Anzahl der Sekunden zwischen den Überprüfungen
+$check_interval = 60
+
+while ($true) {
+    # Überprüfen Sie den Status des Dienstes
+    $status = (Get-Service $service_name).Status
+    
+    # Wenn der Dienst nicht läuft, starten Sie ihn neu
+    if ($status -ne "Running") {
+        Write-Host "Dienst $service_name ist nicht aktiv. Starte den Dienst neu..."
+        Restart-Service $service_name
+    }
+    
+    # Warten Sie für den nächsten Überprüfungszyklus
+    Start-Sleep -Seconds $check_interval
+}
